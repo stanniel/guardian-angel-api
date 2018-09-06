@@ -50,8 +50,11 @@ class UserController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
-    {
+    public function registerAction(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $em
+    ) {
         $user = new User();
         $form = $this->createForm(UserRegisterType::class, $user);
 
@@ -76,9 +79,10 @@ class UserController extends AbstractController
 
         $json = $this->serializer->serialize($user, 'json', ['enable_max_depth' => true, 'groups' => ['public']]);
 
-        return new Response($json, 201, ['Content-Type'  => 'application/json',
-                                                'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, Authorization']);
+        return new Response($json, 201, [
+            'Content-Type' => 'application/json',
+            'Access-Control-Allow-Headers' => '*'
+        ]);
     }
 
     /**
@@ -88,8 +92,11 @@ class UserController extends AbstractController
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function loginAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
-    {
+    public function loginAction(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $em
+    ) {
         $body = $request->getContent();
         $data = $this->serializer->decode($body, 'json');
 
@@ -108,11 +115,11 @@ class UserController extends AbstractController
 
         if ($passwordEncoder->isPasswordValid($user, $data['password'])) {
             $json = $this->serializer->serialize($user, 'json', ['enable_max_depth' => true, 'groups' => ['public']]);
-            return new Response($json, 200, ['Content-Type'  => 'application/json',
-                                                    'Access-Control-Allow-Origin' => '*',
-                'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, Authorization']);
+            return new Response($json, 200, [
+                'Content-Type' => 'application/json',
+                'Access-Control-Allow-Headers' => '*'
+            ]);
         }
-
         throw new HttpException(401, "Authentication error");
     }
 
@@ -136,9 +143,10 @@ class UserController extends AbstractController
         $response = $em->getRepository(User::class)->search($data);
 
         $json = $this->serializer->serialize($response, 'json', ['enable_max_depth' => true, 'groups' => ['public']]);
-        return new Response($json, 200, ['Content-Type'  => 'application/json',
-            'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, Authorization']);
+        return new Response($json, 200, [
+            'Content-Type' => 'application/json',
+            'Access-Control-Allow-Headers' => '*'
+        ]);
     }
 
     /**
@@ -169,9 +177,10 @@ class UserController extends AbstractController
 
         $json = $this->serializer->serialize($user, 'json', ['enable_max_depth' => true, 'groups' => ['public']]);
 
-        return new Response($json, 200, ['Content-Type'  => 'application/json',
-            'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, Authorization']);
+        return new Response($json, 200, [
+            'Content-Type' => 'application/json',
+            'Access-Control-Allow-Headers' => '*'
+        ]);
     }
 
     /**
@@ -202,9 +211,10 @@ class UserController extends AbstractController
 
         $json = $this->serializer->serialize($user, 'json', ['enable_max_depth' => true, 'groups' => ['public']]);
 
-        return new Response($json, 200, ['Content-Type'  => 'application/json',
-            'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Headers' => 'Origin, X-Requested-With, Content-Type, Accept, Authorization']);
+        return new Response($json, 200, [
+            'Content-Type' => 'application/json',
+            'Access-Control-Allow-Headers' => '*'
+        ]);
     }
 }
 
