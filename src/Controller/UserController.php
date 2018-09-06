@@ -120,26 +120,19 @@ class UserController extends AbstractController
      */
     public function searchAction(Request $request, EntityManagerInterface $em)
     {
-            $form = $this->createForm(UserSearchType::class);
-            $data = $request->query->all();
+        $form = $this->createForm(UserSearchType::class);
+        $data = $request->query->all();
 
-            $form->submit($data, false);
+        $form->submit($data, false);
 
-            if (!$form->isValid()) {
-                throw new HttpException(400, "Request not valid");
-            }
+        if (!$form->isValid()) {
+            throw new HttpException(400, "Request not valid");
+        }
 
-            $results = $em->getRepository(User::class)->search($data);
+        $response = $em->getRepository(User::class)->search($data);
 
-            $json = $this->serializer->serialize($results, 'json',
-                ['enable_max_depth' => true, 'groups' => ['public']]);
-            $response = new Response();
-            $response->setContent($json);
-            $response->setStatusCode(200);
-            //$response->headers->set('Content-Type', 'application/json');
-            //$response->headers->set('Access-Control-Allow-Origin', '*');
-
-            return $response;
+        $json = $this->serializer->serialize($response, 'json', ['enable_max_depth' => true, 'groups' => ['public']]);
+        return new Response($json, 200, ['Content-Type'  => 'application/json']);
     }
 
     /**
