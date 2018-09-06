@@ -81,6 +81,7 @@ class UserController extends AbstractController
 
         return new Response($json, 201, [
             'Content-Type' => 'application/json',
+            'Access-Control-Allow-Origin:' => '*',
             'Access-Control-Allow-Headers' => '*'
         ]);
     }
@@ -117,6 +118,7 @@ class UserController extends AbstractController
             $json = $this->serializer->serialize($user, 'json', ['enable_max_depth' => true, 'groups' => ['public']]);
             return new Response($json, 200, [
                 'Content-Type' => 'application/json',
+                'Access-Control-Allow-Origin:' => '*',
                 'Access-Control-Allow-Headers' => '*'
             ]);
         }
@@ -145,6 +147,7 @@ class UserController extends AbstractController
         $json = $this->serializer->serialize($response, 'json', ['enable_max_depth' => true, 'groups' => ['public']]);
         return new Response($json, 200, [
             'Content-Type' => 'application/json',
+            'Access-Control-Allow-Origin:' => '*',
             'Access-Control-Allow-Headers' => '*'
         ]);
     }
@@ -179,6 +182,7 @@ class UserController extends AbstractController
 
         return new Response($json, 200, [
             'Content-Type' => 'application/json',
+            'Access-Control-Allow-Origin:' => '*',
             'Access-Control-Allow-Headers' => '*'
         ]);
     }
@@ -213,6 +217,7 @@ class UserController extends AbstractController
 
         return new Response($json, 200, [
             'Content-Type' => 'application/json',
+            'Access-Control-Allow-Origin:' => '*',
             'Access-Control-Allow-Headers' => '*'
         ]);
     }
